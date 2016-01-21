@@ -1,0 +1,9 @@
+<appwizard><introduction><name></name><author>CodeIgniter for SAE</author><icon></icon><homepage></homepage><description><![CDATA[PHP 框架 CodeIgniter 的 SAE 定制版]]></description></introduction><platform><services><service></service><service name="public"  params="数据存储">Storage</service><service size="3M">Memcache</service><service>Mysql</service><service>kvdb</service></services><appconfig><tpl><![CDATA[
+name: <<appname>>
+version: <<version>>
+handle:
+- compress:  if ( out_header["Content-type"]=="text/css" ) compress
+- compress:  if ( out_header["Content-type"]=="text/javascript" ) compress
+- compress:  if ( out_header["Content-type"]=="application/javascript" ) compress
+
+]]></tpl></appconfig></platform><code><initScript>index.php</initScript></code></appwizard>

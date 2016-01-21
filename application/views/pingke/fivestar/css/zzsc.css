@@ -1,0 +1,24 @@
+@charset "utf-8";
+*{font:normal 12px/2em '微软雅黑';padding:0;margin:0}
+ul,li{list-style:none}
+a{ color:#09f;}
+/*容器*/
+#xzw_starSys{width:400px;border:1px solid #ccc;padding:50px;margin:100px auto}
+#xzw_starBox{position:relative;width:120px;float:left}
+/**/
+#xzw_starSys .description{clear:both;padding:10px 0px}
+#xzw_starSys .star{height:20px;width:120px;position:relative;background:url(../images/123.png) repeat-x;cursor:pointer}
+#xzw_starSys .star li{float:left;padding:0px;margin:0px}
+#xzw_starSys .star li a{display:block;width:24px;height:20px;overflow:hidden;text-indent:-9999px;position:absolute;z-index:5}
+#xzw_starSys .star li a:hover{background:url(../images/123.png) 0 -25px repeat-x;z-index:3;left:0}
+#xzw_starSys .star a.one-star{left:0}
+#xzw_starSys .star a.one-star:hover{width:24px}
+#xzw_starSys .star a.two-stars{left:24px}
+#xzw_starSys .star a.two-stars:hover{width:48px}
+#xzw_starSys .star a.three-stars{left:48px}
+#xzw_starSys .star a.three-stars:hover{width:72px}
+#xzw_starSys .star a.four-stars{left:72px}
+#xzw_starSys .star a.four-stars:hover{width:96px}
+#xzw_starSys .star a.five-stars{left:96px}
+#xzw_starSys .star a.five-stars:hover{width:120px}
+#xzw_starSys .current-rating{background:url(../images/123.png) 0 -25px repeat-x;position:absolute;height:20px;z-index:1;top:0;left:0}
