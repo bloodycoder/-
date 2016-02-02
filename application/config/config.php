@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://1.bloodycoder.sinaapp.com/';
+$config['base_url']	= 'http://localhost/index.php/';
 
 /*
 |--------------------------------------------------------------------------

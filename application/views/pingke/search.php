@@ -11,13 +11,13 @@
 		<div class="col-md-12 column">
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/pingke_index/">评课网</a>
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/index.php/pingke_index/">评课网</a>
 				</div>
 				
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 					</ul>
-					<form method = "post" action = "/pingke_index/search/" class="navbar-form navbar-left" role="search">
+					<form method = "post" action = "/index.php/pingke_index/search/" class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder = "输入课程名字" name = "course"/>
 						</div> <button type="submit" class="btn btn-default" >搜索</button>
@@ -28,17 +28,17 @@
 									<a href="#"><?php echo $nickname;?>，您好</a>
 								</li>	
 						<li>
-							 <a href="/test/logout/">登出</a>
+							 <a href="/index.php/test/logout/">登出</a>
 						</li>
 						<li>
 							 <a href="#">关于我们</a>
 						</li>
 						<?php else:?>
 						<li>
-							 <a href="/test/">注册</a>
+							 <a href="/index.php/test/">注册</a>
 						</li>
 						<li>
-							 <a href="/test/log/">登录</a>
+							 <a href="/index.php/test/log/">登录</a>
 						</li>
 						<li>
 							 <a href="#">关于我们</a>
@@ -82,7 +82,7 @@
 					'
 					</p>
 					<p>
-						 <a class="btn" href="';echo "/pingke_index/content/";echo $items['sid'];echo "/1";echo ' ">查看详细 »</a>
+						 <a class="btn" href="';echo "/index.php/pingke_index/content/";echo $items['sid'];echo "/1";echo ' ">查看详细 »</a>
 					</p>
 				</div>
 			</div>'
@@ -92,7 +92,7 @@
 						    <?php echo
 							'<p>
 								 <a class="btn btn-primary btn-large" href="';
-								 echo '/pingke_index/add/';
+								 echo '/index.php/pingke_index/add/';
  								 echo $course_id;
 								  echo '">增加老师</a>
 							</p>'

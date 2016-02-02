@@ -24,13 +24,13 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 		<div class="col-md-12 column">
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/pingke_index/">评课网</a>
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="/index.php/pingke_index/">评课网</a>
 				</div>
 				
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 					</ul>
-					<form method = "post" action = "/pingke_index/search/" class="navbar-form navbar-left" role="search">
+					<form method = "post" action = "/index.php/pingke_index/search/" class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder = "输入课程名字" name = "course"/>
 						</div> <button type="submit" class="btn btn-default" >搜索</button>
@@ -41,17 +41,17 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 									<a href="#"><?php echo $nickname;?>，您好</a>
 								</li>	
 						<li>
-							 <a href="/test/logout/">登出</a>
+							 <a href="/index.php/test/logout/">登出</a>
 						</li>
 						<li>
 							 <a href="#">关于我们</a>
 						</li>
 						<?php else:?>
 						<li>
-							 <a href="/test/">注册</a>
+							 <a href="/index.php/test/">注册</a>
 						</li>
 						<li>
-							 <a href="/test/log/">登录</a>
+							 <a href="/index.php/test/log/">登录</a>
 						</li>
 						<li>
 							 <a href="#">关于我们</a>
@@ -86,7 +86,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 				</p>
 				<p>
 
-<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" href=<?php echo "\"/pingke_index/star/";echo $pig;echo "\"";?> >
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" href=<?php echo "\"/index.php/pingke_index/star/";echo $pig;echo "\"";?> >
    点我打分
 </button>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
@@ -154,7 +154,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 				<div class="col-md-4 column">
 					<ul class="pagination">
 						<li>
-							 <a href=<?php echo "/pingke_index/content/";
+							 <a href=<?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $pre;
@@ -167,7 +167,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 						    class = "active"
 						    <?php endif;?>				
 						    >
-							 <a href=<?php echo "/pingke_index/content/";
+							 <a href=<?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $page1;
@@ -181,7 +181,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 						    class = "active"
 						    <?php endif;?>	
 						    >
-							 <a href=<?php echo "/pingke_index/content/";
+							 <a href=<?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $page2;
@@ -195,7 +195,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 						    class = "active"
 						    <?php endif;?>	
 						>
-							 <a href=<?php echo "/pingke_index/content/";
+							 <a href=<?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $page3;
@@ -209,7 +209,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 						    class = "active"
 						    <?php endif;?>	
 						>
-							 <a href=<?php echo "/pingke_index/content/";
+							 <a href=<?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $page4;
@@ -223,7 +223,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 						    class = "active"
 						    <?php endif;?>	
 						>
-							 <a href=<?php echo "/pingke_index/content/";
+							 <a href=<?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $page5;
@@ -232,7 +232,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
 						</li>
 						<?php endif;?>
 						<li>
-							 <a href= <?php echo "/pingke_index/content/";
+							 <a href= <?php echo "/index.php/pingke_index/content/";
 							 	echo $course_tea_id;
 							 	echo "/";
 							 	echo $next;
@@ -257,7 +257,7 @@ window.open('/pingke_index/star/','Window','width=600,height=400,top=100')
       <div class="row" draggable="true">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-          <form method="post" enctype="multipart/form-data" role="form" action = "/pingke_index/addcomment/
+          <form method="post" enctype="multipart/form-data" role="form" action = "/index.php/pingke_index/addcomment/
           <?php echo $course_tea_id;?>
           ">
             <div class="form-group">
