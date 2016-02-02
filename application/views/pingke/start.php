@@ -67,11 +67,11 @@ function stopDefault(e){
 <div id="xzw_starSys">
     <div id="xzw_starBox">
         <ul class="star" id="star">
-            <li><a href= <?php echo "\"/pingke_index/score/";echo $pig;echo "/1/\""?> title="1" class="one-star">1</a></li>
-            <li><a href=<?php echo "\"/pingke_index/score/";echo $pig;echo "/2/\""?> title="2" class="two-stars">2</a></li>
-            <li><a href=<?php echo "\"/pingke_index/score/";echo $pig;echo "/3/\""?> title="3" class="three-stars">3</a></li>
-            <li><a href=<?php echo "\"/pingke_index/score/";echo $pig;echo "/4/\""?> title="4" class="four-stars">4</a></li>
-            <li><a href=<?php echo "\"/pingke_index/score/";echo $pig;echo "/5/\""?> title="5" class="five-stars">5</a></li>
+            <li><a href= <?php echo "\"/index.php/pingke_index/score/";echo $pig;echo "/1/\""?> title="1" class="one-star">1</a></li>
+            <li><a href=<?php echo "\"/index.php/pingke_index/score/";echo $pig;echo "/2/\""?> title="2" class="two-stars">2</a></li>
+            <li><a href=<?php echo "\"/index.php/pingke_index/score/";echo $pig;echo "/3/\""?> title="3" class="three-stars">3</a></li>
+            <li><a href=<?php echo "\"/index.php/pingke_index/score/";echo $pig;echo "/4/\""?> title="4" class="four-stars">4</a></li>
+            <li><a href=<?php echo "\"/index.php/pingke_index/score/";echo $pig;echo "/5/\""?> title="5" class="five-stars">5</a></li>
         </ul>
         <div class="current-rating" id="showb"></div>
     </div>
