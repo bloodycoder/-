@@ -25,7 +25,7 @@ class Pingke_index extends CI_Controller {
         $this -> load -> view('pingke/start',$data);
     }
     public function add($course_id){
-        $this -> load -> database();
+        $db1=$this -> load ->database('pingke',true);
         $teacher_name = $this->input -> post("teacher_name");
         $this -> load -> library('session');
         $name = $this -> session -> userdata('username');
@@ -40,34 +40,34 @@ class Pingke_index extends CI_Controller {
         $this -> load -> view('pingke/add_tea',$data);
         if(strlen($teacher_name) >= 1){
             $data = array('teacher_name' => $teacher_name);
-            $this -> db -> insert('teacher',$data);
-            $query = $this -> db -> get_where('teacher',array('teacher_name' => $teacher_name ),1,0);
+            $db1 -> insert('teacher',$data);
+            $query = $db1 -> get_where('teacher',array('teacher_name' => $teacher_name ),1,0);
             foreach(($query->result()) as $row){
                 $teacher_id = $row -> id;
             }   
             $data = array('id_course' => $course_id,'id_teacher' => $teacher_id,'score'=>0,'people'=>0);
-            $this -> db -> insert('course_tea',$data);     
-            redirect("/pingke_index/add/12");
+           $db1 -> insert('course_tea',$data);     
+            redirect(pingke_url()."/pingke_index/add/12");
         }
     }
     
     public function delete_later(){
         header("Content-type:text/html;charset=utf-8");
-        $this -> load -> database();
-        $query = $this -> db -> get('tempo');
+        $db1=$this -> load ->database('pingke',true);
+        $query = $db1 -> get('tempo');
         foreach(($query->result()) as $row){
-            $query_course = $this -> db -> get_where('course',array('course_name' => $row->teacher_name),1,0);
+            $query_course = $db1 -> get_where('course',array('course_name' => $row->teacher_name),1,0);
             foreach(($query_course->result()) as $col){
                 $col = $col;
             }
             $data = array('teacher_name' => $row->course_name);
-            $this -> db -> insert('teacher',$data);
-            $query_tem = $this -> db->get_where('teacher',array('teacher_name'=>$row->course_name),1,0);
+           $db1 -> insert('teacher',$data);
+            $query_tem = $db1->get_where('teacher',array('teacher_name'=>$row->course_name),1,0);
             foreach(($query_tem->result()) as $pig){
                 $teacher_id = $pig -> id;
             }
             $data = array('id_course' => $col->id,'id_teacher'=>$teacher_id,'score'=>0,'people'=>0);
-            $this -> db -> insert('course_tea',$data);
+            $db1 -> insert('course_tea',$data);
             if($query_course->num_rows()==0){
                 echo $row->teacher_name;
                 echo "<br>";
@@ -79,17 +79,17 @@ class Pingke_index extends CI_Controller {
     }
 	public function search(){
 	    header("Content-type:text/html;charset=utf-8");
-        $this -> load -> database();
+        $db1=$this -> load ->database('pingke',true);
     	$course_name = $this -> input -> post("course");
         $keywordArray = preg_split('/(?<!^)(?!$)/u',$course_name);
         foreach($keywordArray as $row){
-            $this->db->like('course_name',$row,'both');
+            $db1->like('course_name',$row,'both');
         }
         if(strlen($course_name)>=1){
-            $query = $this->db->get('course');
+            $query = $db1->get('course');
         }
         else{
-            redirect('/pingke_index/');
+            redirect(pingke_url().'/pingke_index/');
         }
 		//$query = $this -> db -> get_where('course',array('course_name' => $course_name ),1,0);
 		//获取ID
@@ -120,9 +120,9 @@ class Pingke_index extends CI_Controller {
                 $data["noteacher"] = 0;
                 foreach(($query->result()) as $pig){
                     $course_id = $pig -> id;
-                    $query1 = $this -> db -> get_where('course_tea',array('id_course'=>$course_id),100,0);
+                    $query1 = $db1 -> get_where('course_tea',array('id_course'=>$course_id),100,0);
                     foreach(($query1->result()) as $row){
-                        $query_teacher = $this -> db -> get_where('teacher',array('id' => $row->id_teacher ),1,0);
+                        $query_teacher = $db1 -> get_where('teacher',array('id' => $row->id_teacher ),1,0);
                         foreach(($query_teacher->result()) as $col){
                           $teacher_name = $col -> teacher_name;
                         }
@@ -143,13 +143,14 @@ class Pingke_index extends CI_Controller {
                 $this -> load -> view('pingke/search',$data);
                 }
         else{    
-                $this -> load -> view('notfound',$data);
+                $this -> load -> view('pingke/notfound',$data);
                 $data["exist"] = 0;    
         }
 	}
 
         public function content($pig,$current_page){
                 header("Content-type:text/html;charset=utf-8");
+                $db1=$this -> load ->database('pingke',true);
                 $this -> load -> library('session');
                 $name = $this -> session -> userdata('username');
                 $this -> session -> set_userdata("page_id",$pig);
@@ -158,21 +159,20 @@ class Pingke_index extends CI_Controller {
                 }
                 else{
                         $data['is_login'] = 0;
-                        redirect('/test/log');
+                        redirect(pingke_url().'/test/log');
                 }
-                $this -> load -> database();
-                $query = $this -> db -> get_where('course_tea',array('id' => $pig),1,0);
+                $query = $db1 -> get_where('course_tea',array('id' => $pig),1,0);
                 foreach(($query->result()) as $row){
                         $id_course = $row -> id_course;
                         $id_teacher = $row -> id_teacher;
                         $score = $row -> score;
                         $people = $row -> people;
                 }
-                $query = $this -> db -> get_where('teacher',array('id' => $id_teacher),1,0);
+                $query = $db1 -> get_where('teacher',array('id' => $id_teacher),1,0);
                 foreach(($query->result()) as $row){
                         $teacher_name = $row -> teacher_name;
                 }
-                $query = $this -> db -> get_where('course',array('id' => $id_course),1,0);
+                $query = $db1 -> get_where('course',array('id' => $id_course),1,0);
                 foreach(($query->result()) as $row){
                         $course_name = $row -> course_name;
                 }          
@@ -184,7 +184,7 @@ class Pingke_index extends CI_Controller {
                 else{
                         $first_page = (int)($current_page/5)*5 + 1;
                 }
-                $query = $this -> db -> get_where('comments',array('course_tea_id' => $pig),500,0);
+                $query = $db1 -> get_where('comments',array('course_tea_id' => $pig),500,0);
                 $rows = $query -> num_rows();
                 if($rows % 6 == 0){
                         $pages = $rows/6;
@@ -293,35 +293,35 @@ class Pingke_index extends CI_Controller {
 
         public function addcomment(){
                 $this -> load -> library('session');
+                $db1=$this -> load ->database('pingke',true);
                 $course_tea_id = $this -> session -> userdata('page_id');
-                $this -> load -> database();
                 $this -> load -> library('session');
                 $nickname = $this -> session -> userdata('nickname');
                 $data['nickname'] = $nickname;
                 $data['course_tea_id'] = $course_tea_id;
                 $data['content'] = $this -> input -> post('content');
-                $this -> db -> insert('comments',$data);
-                redirect('/pingke_index/content/'.$course_tea_id.'/1');
+                $db1 -> insert('comments',$data);
+                redirect(pingke_url().'/pingke_index/content/'.$course_tea_id.'/1');
         }
         public function score($pig,$score){
             $this -> load -> library('session');
-            $this -> load -> database();
+            $db1=$this -> load ->database('pingke',true);
             $name = $this -> session -> userdata('username');
-            $query = $this -> db -> get_where('anti_shua',array('user_name'=>$name,'course_tea_id'=>$pig),1,0);
+            $query =$db1 -> get_where('anti_shua',array('user_name'=>$name,'course_tea_id'=>$pig),1,0);
             if($query->num_rows()==0){
-                $this -> db -> where("id",$pig);
-                $query = $this -> db -> get('course_tea');
+                $db1 -> where("id",$pig);
+                $query = $db1 -> get('course_tea');
                 foreach(($query->result()) as $row){
                     $people_raw = $row -> people; 
                     $score_raw = $row -> score;
                 }
                 $score_new = $score_raw+$score;
                 $people_new = $people_raw +1;
-                $this -> db -> where("id",$pig);
-                $this -> db -> update("course_tea",array('people'=>$people_new,'score'=>$score_new));
-                $this -> db -> insert('anti_shua',array('course_tea_id'=>$pig,'user_name'=>$name));
+                $db1 -> where("id",$pig);
+                $db1 -> update("course_tea",array('people'=>$people_new,'score'=>$score_new));
+                $db1 -> insert('anti_shua',array('course_tea_id'=>$pig,'user_name'=>$name));
             }
-            redirect('/pingke_index/content/'.$pig.'/1');
+            redirect(pingke_url().'/pingke_index/content/'.$pig.'/1');
         }
 
 }

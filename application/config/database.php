@@ -48,23 +48,21 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = SAE_MYSQL_HOST_M;//主库
-$db['default']['hostname_s'] = SAE_MYSQL_HOST_S;//从库 
-$db['default']['username'] = SAE_MYSQL_USER;
-$db['default']['password'] = SAE_MYSQL_PASS;
-$db['default']['database'] = SAE_MYSQL_DB;
-$db['default']['port'] = SAE_MYSQL_PORT;
-$db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = FALSE;
-$db['default']['db_debug'] = TRUE;
-$db['default']['cache_on'] = FALSE;
-$db['default']['cachedir'] = ''; //SAE数据库缓存, 使用kvdb进行缓存. 此配置值为key前缀, 例如 "dbcache_". 若不设置, 则不缓存
-$db['default']['char_set'] = 'utf8';
-$db['default']['dbcollat'] = 'utf8_general_ci';
-$db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['pingke']['hostname'] = 'localhost';
+$db['pingke']['username'] = 'root';
+$db['pingke']['password'] = '';
+$db['pingke']['database'] = 'app_bloodycoder';
+$db['pingke']['dbdriver'] = 'mysql';
+$db['pingke']['dbprefix'] = '';
+$db['pingke']['pconnect'] = TRUE;
+$db['pingke']['db_debug'] = TRUE;
+$db['pingke']['cache_on'] = FALSE;
+$db['pingke']['cachedir'] = '';
+$db['pingke']['char_set'] = 'utf8';
+$db['pingke']['dbcollat'] = 'utf8_general_ci';
+$db['pingke']['swap_pre'] = '';
+$db['pingke']['autoinit'] = TRUE;
+$db['pingke']['stricton'] = FALSE;
 
 
 /* End of file database.php */
