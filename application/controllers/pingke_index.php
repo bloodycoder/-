@@ -1,31 +1,37 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pingke_index extends CI_Controller {
-        function __construct(){
-    // this is your constructor
-            parent::__construct();
+    
+    function __construct(){
+        // this is your constructor
+        parent::__construct();
         $this->load->helper('form');
         $this->load->helper('url');
+        $this->load->model('comments');
+    }
+	
+    public function index(){
+        $this -> load -> library('session');
+        $name = $this -> session -> userdata('username');
+        if(strlen($name)>=1){
+                $data['is_login'] = 1;
         }
-	public function index(){
-                $this -> load -> library('session');
-                $name = $this -> session -> userdata('username');
-                if(strlen($name)>=1){
-                        $data['is_login'] = 1;
-                }
-                else{
-                        $data['is_login'] = 0;
-                }
-                $name = $this -> session -> userdata('username');
-                $data["nickname"] = $this-> session -> userdata('nickname');
-		$this -> load -> view('pingke/index',$data);
+        else{
+                $data['is_login'] = 0;
+        }
+        $name = $this -> session -> userdata('username');
+        $data["nickname"] = $this-> session -> userdata('nickname');
+		$this -> load -> view('pingke/template/header');
+        $this -> load -> view('pingke/index',$data);
 	}
+
     public function star($pig){
         $data['pig'] = $pig;
         $this -> load -> view('pingke/start',$data);
     }
+    
     public function add($course_id){
-        $db1=$this -> load ->database('pingke',true);
+        $db1 = $this -> load ->database('pingke',true);
         $teacher_name = $this->input -> post("teacher_name");
         $this -> load -> library('session');
         $name = $this -> session -> userdata('username');
@@ -53,7 +59,7 @@ class Pingke_index extends CI_Controller {
     
     public function delete_later(){
         header("Content-type:text/html;charset=utf-8");
-        $db1=$this -> load ->database('pingke',true);
+        $db1 = $this -> load ->database('pingke',true);
         $query = $db1 -> get('tempo');
         foreach(($query->result()) as $row){
             $query_course = $db1 -> get_where('course',array('course_name' => $row->teacher_name),1,0);
@@ -61,7 +67,7 @@ class Pingke_index extends CI_Controller {
                 $col = $col;
             }
             $data = array('teacher_name' => $row->course_name);
-           $db1 -> insert('teacher',$data);
+            $db1 -> insert('teacher',$data);
             $query_tem = $db1->get_where('teacher',array('teacher_name'=>$row->course_name),1,0);
             foreach(($query_tem->result()) as $pig){
                 $teacher_id = $pig -> id;
@@ -74,10 +80,12 @@ class Pingke_index extends CI_Controller {
             }
         }
     }
+    
     public function add_tea($course_id,$teacher_name){
 
     }
-	public function search(){
+	
+    public function search(){
 	    header("Content-type:text/html;charset=utf-8");
         $db1=$this -> load ->database('pingke',true);
     	$course_name = $this -> input -> post("course");
