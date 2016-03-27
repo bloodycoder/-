@@ -87,7 +87,7 @@ class Pingke_index extends CI_Controller {
 	
     public function search(){
 	    header("Content-type:text/html;charset=utf-8");
-        $db1=$this -> load ->database('pingke',true);
+        $db1 = $this -> load ->database('pingke',true);
     	$course_name = $this -> input -> post("course");
         $keywordArray = preg_split('/(?<!^)(?!$)/u',$course_name);
         foreach($keywordArray as $row){
@@ -156,180 +156,181 @@ class Pingke_index extends CI_Controller {
         }
 	}
 
-        public function content($pig,$current_page){
-                header("Content-type:text/html;charset=utf-8");
-                $db1=$this -> load ->database('pingke',true);
-                $this -> load -> library('session');
-                $name = $this -> session -> userdata('username');
-                $this -> session -> set_userdata("page_id",$pig);
-                if(strlen($name)>=1){
-                        $data['is_login'] = 1;
-                }
-                else{
-                        $data['is_login'] = 0;
-                        redirect(pingke_url().'/test/log');
-                }
-                $query = $db1 -> get_where('course_tea',array('id' => $pig),1,0);
-                foreach(($query->result()) as $row){
-                        $id_course = $row -> id_course;
-                        $id_teacher = $row -> id_teacher;
-                        $score = $row -> score;
-                        $people = $row -> people;
-                }
-                $query = $db1 -> get_where('teacher',array('id' => $id_teacher),1,0);
-                foreach(($query->result()) as $row){
-                        $teacher_name = $row -> teacher_name;
-                }
-                $query = $db1 -> get_where('course',array('id' => $id_course),1,0);
-                foreach(($query->result()) as $row){
-                        $course_name = $row -> course_name;
-                }          
-                //以下是分页时间。
-                //
-                if($current_page % 5 == 0 ){
-                        $first_page = $current_page-4;
-                }
-                else{
-                        $first_page = (int)($current_page/5)*5 + 1;
-                }
-                $query = $db1 -> get_where('comments',array('course_tea_id' => $pig),500,0);
-                $rows = $query -> num_rows();
-                if($rows % 6 == 0){
-                        $pages = $rows/6;
-                }
-                else{
-                        $pages = (int)($rows/6) + 1;
-                }
-                $content_array = $query -> result_array();
-                if((($current_page-1)*6)+1 <= $rows){
-                        $data["comment1"] = ($current_page-1)*6+1;
-                        $data["content1"] = $content_array[$data["comment1"]-1]["content"];
-                        $data["nickname1"] = $content_array[$data["comment1"]-1]["nickname"];
-                }
-                else{
-                        $data["comment1"] = 0;
-                }
-                if($data["comment1"]+1<=$rows && $data["comment1"]!=0){
-                        $data["comment2"] = $data["comment1"] +1;
+    public function content($pig,$current_page){
+            header("Content-type:text/html;charset=utf-8");
+            $db1=$this -> load ->database('pingke',true);
+            $this -> load -> library('session');
+            $name = $this -> session -> userdata('username');
+            $this -> session -> set_userdata("page_id",$pig);
+            if(strlen($name)>=1){
+                    $data['is_login'] = 1;
+            }
+            else{
+                    $data['is_login'] = 0;
+                    redirect(pingke_url().'/test/log');
+            }
+            $query = $db1 -> get_where('course_tea',array('id' => $pig),1,0);
+            foreach(($query->result()) as $row){
+                    $id_course = $row -> id_course;
+                    $id_teacher = $row -> id_teacher;
+                    $score = $row -> score;
+                    $people = $row -> people;
+            }
+            $query = $db1 -> get_where('teacher',array('id' => $id_teacher),1,0);
+            foreach(($query->result()) as $row){
+                    $teacher_name = $row -> teacher_name;
+            }
+            $query = $db1 -> get_where('course',array('id' => $id_course),1,0);
+            foreach(($query->result()) as $row){
+                    $course_name = $row -> course_name;
+            }          
+            //以下是分页时间。
+            //
+            if($current_page % 5 == 0 ){
+                    $first_page = $current_page-4;
+            }
+            else{
+                    $first_page = (int)($current_page/5)*5 + 1;
+            }
+            $query = $db1 -> get_where('comments',array('course_tea_id' => $pig),500,0);
+            $rows = $query -> num_rows();
+            if($rows % 6 == 0){
+                    $pages = $rows/6;
+            }
+            else{
+                    $pages = (int)($rows/6) + 1;
+            }
+            $content_array = $query -> result_array();
+            if((($current_page-1)*6)+1 <= $rows){
+                    $data["comment1"] = ($current_page-1)*6+1;
+                    $data["content1"] = $content_array[$data["comment1"]-1]["content"];
+                    $data["nickname1"] = $content_array[$data["comment1"]-1]["nickname"];
+            }
+            else{
+                    $data["comment1"] = 0;
+            }
+            if($data["comment1"]+1<=$rows && $data["comment1"]!=0){
+                    $data["comment2"] = $data["comment1"] +1;
 
-                        $data["content2"] = $content_array[$data["comment2"]-1]["content"];
-                        $data["nickname2"] = $content_array[$data["comment2"]-1]["nickname"];
-                }
-                else{
-                        $data["comment2"] = 0;
-                }
-                if($data["comment2"]+1<=$rows && $data["comment2"]!=0){
-                        $data["comment3"] = $data["comment2"] +1;
-                        $data["content3"] = $content_array[$data["comment3"]-1]["content"];
-                        $data["nickname3"] = $content_array[$data["comment3"]-1]["nickname"];
-                }
-                else{
-                        $data["comment3"] = 0; 
-                }
-                if($data["comment3"]+1<=$rows && $data["comment3"]!=0){
-                        $data["comment4"] = $data["comment3"] +1;
-                        $data["content4"] = $content_array[$data["comment4"]-1]["content"];
-                        $data["nickname4"] = $content_array[$data["comment4"]-1]["nickname"];
-                }
-                else{
-                        $data["comment4"] = 0;
-                }
-                if($data["comment4"]+1<=$rows && $data["comment4"]!=0){
-                        $data["comment5"] = $data["comment4"] +1;
-                        $data["content5"] = $content_array[$data["comment5"]-1]["content"];
-                        $data["nickname5"] = $content_array[$data["comment5"]-1]["nickname"];
-                }
-                else{
-                        $data["comment5"] = 0;
-                }
-                if($data["comment5"]+1<=$rows && $data["comment5"]!=0){
-                        $data["comment6"] = $data["comment5"] +1;
-                        $data["content6"] = $content_array[$data["comment6"]-1]["content"];
-                        $data["nickname6"] = $content_array[$data["comment6"]-1]["nickname"];
-                }
-                else{
-                        $data["comment6"] = 0;
-                }
-                $data["course_tea_id"] = $pig;
-                $data["teacher_name"] = $teacher_name;
-                $data["course_name"] = $course_name;
-                $data["people"] = $people;
-                if($people ==0){
-                    $data['score'] = 0;
-                }
-                else{
-                    $data["score"] = $score/$people;
-                }
-                $data["is_login"] = 1;
-                $data["pre"] = $first_page -1;
-                $data["next"] = $first_page + 5;
-                $data["page1"] = $first_page;
-                $data["page2"] = $first_page+1;
-                $data["page3"] = $first_page+2;
-                $data["page4"] = $first_page+3;
-                $data["page5"] = $first_page+4;
-                if($data["pre"]<=0){
-                        $data["pre"] = 1;
-                        $data["next"] = 1;
-                }
-                else if($data["next"] > $pages){
-                        $data["next"] = $pages;
-                }
-                if($data["page1"]>$pages){
-                        $data["page1"] = 0;
-                }
-                if($data["page2"]>$pages){
-                        $data["page2"] = 0;
-                }
-                if($data["page3"]>$pages){
-                        $data["page3"] = 0;
-                }
-                if($data["page4"]>$pages){
-                        $data["page4"] = 0;
-                }
-                if($data["page5"]>$pages){
-                        $data["page5"] = 0;
-                }
-                        
-                $data["current_page"] = $current_page;
-                $this -> load -> library('session');
-                $name = $this -> session -> userdata('username');
-                $data["nickname"] = $this-> session -> userdata('nickname');
-                $data["pig"] = $pig;
-                $this -> load -> view('pingke/content',$data);    
-        }
+                    $data["content2"] = $content_array[$data["comment2"]-1]["content"];
+                    $data["nickname2"] = $content_array[$data["comment2"]-1]["nickname"];
+            }
+            else{
+                    $data["comment2"] = 0;
+            }
+            if($data["comment2"]+1<=$rows && $data["comment2"]!=0){
+                    $data["comment3"] = $data["comment2"] +1;
+                    $data["content3"] = $content_array[$data["comment3"]-1]["content"];
+                    $data["nickname3"] = $content_array[$data["comment3"]-1]["nickname"];
+            }
+            else{
+                    $data["comment3"] = 0; 
+            }
+            if($data["comment3"]+1<=$rows && $data["comment3"]!=0){
+                    $data["comment4"] = $data["comment3"] +1;
+                    $data["content4"] = $content_array[$data["comment4"]-1]["content"];
+                    $data["nickname4"] = $content_array[$data["comment4"]-1]["nickname"];
+            }
+            else{
+                    $data["comment4"] = 0;
+            }
+            if($data["comment4"]+1<=$rows && $data["comment4"]!=0){
+                    $data["comment5"] = $data["comment4"] +1;
+                    $data["content5"] = $content_array[$data["comment5"]-1]["content"];
+                    $data["nickname5"] = $content_array[$data["comment5"]-1]["nickname"];
+            }
+            else{
+                    $data["comment5"] = 0;
+            }
+            if($data["comment5"]+1<=$rows && $data["comment5"]!=0){
+                    $data["comment6"] = $data["comment5"] +1;
+                    $data["content6"] = $content_array[$data["comment6"]-1]["content"];
+                    $data["nickname6"] = $content_array[$data["comment6"]-1]["nickname"];
+            }
+            else{
+                    $data["comment6"] = 0;
+            }
+            $data["course_tea_id"] = $pig;
+            $data["teacher_name"] = $teacher_name;
+            $data["course_name"] = $course_name;
+            $data["people"] = $people;
+            if($people ==0){
+                $data['score'] = 0;
+            }
+            else{
+                $data["score"] = $score/$people;
+            }
+            $data["is_login"] = 1;
+            $data["pre"] = $first_page -1;
+            $data["next"] = $first_page + 5;
+            $data["page1"] = $first_page;
+            $data["page2"] = $first_page+1;
+            $data["page3"] = $first_page+2;
+            $data["page4"] = $first_page+3;
+            $data["page5"] = $first_page+4;
+            if($data["pre"]<=0){
+                    $data["pre"] = 1;
+                    $data["next"] = 1;
+            }
+            else if($data["next"] > $pages){
+                    $data["next"] = $pages;
+            }
+            if($data["page1"]>$pages){
+                    $data["page1"] = 0;
+            }
+            if($data["page2"]>$pages){
+                    $data["page2"] = 0;
+            }
+            if($data["page3"]>$pages){
+                    $data["page3"] = 0;
+            }
+            if($data["page4"]>$pages){
+                    $data["page4"] = 0;
+            }
+            if($data["page5"]>$pages){
+                    $data["page5"] = 0;
+            }
+                    
+            $data["current_page"] = $current_page;
+            $this -> load -> library('session');
+            $name = $this -> session -> userdata('username');
+            $data["nickname"] = $this-> session -> userdata('nickname');
+            $data["pig"] = $pig;
+            $this -> load -> view('pingke/content',$data);    
+    }
 
-        public function addcomment(){
-                $this -> load -> library('session');
-                $db1=$this -> load ->database('pingke',true);
-                $course_tea_id = $this -> session -> userdata('page_id');
-                $this -> load -> library('session');
-                $nickname = $this -> session -> userdata('nickname');
-                $data['nickname'] = $nickname;
-                $data['course_tea_id'] = $course_tea_id;
-                $data['content'] = $this -> input -> post('content');
-                $db1 -> insert('comments',$data);
-                redirect(pingke_url().'/pingke_index/content/'.$course_tea_id.'/1');
-        }
-        public function score($pig,$score){
+    public function addcomment(){
             $this -> load -> library('session');
             $db1=$this -> load ->database('pingke',true);
-            $name = $this -> session -> userdata('username');
-            $query =$db1 -> get_where('anti_shua',array('user_name'=>$name,'course_tea_id'=>$pig),1,0);
-            if($query->num_rows()==0){
-                $db1 -> where("id",$pig);
-                $query = $db1 -> get('course_tea');
-                foreach(($query->result()) as $row){
-                    $people_raw = $row -> people; 
-                    $score_raw = $row -> score;
-                }
-                $score_new = $score_raw+$score;
-                $people_new = $people_raw +1;
-                $db1 -> where("id",$pig);
-                $db1 -> update("course_tea",array('people'=>$people_new,'score'=>$score_new));
-                $db1 -> insert('anti_shua',array('course_tea_id'=>$pig,'user_name'=>$name));
+            $course_tea_id = $this -> session -> userdata('page_id');
+            $this -> load -> library('session');
+            $nickname = $this -> session -> userdata('nickname');
+            $data['nickname'] = $nickname;
+            $data['course_tea_id'] = $course_tea_id;
+            $data['content'] = $this -> input -> post('content');
+            $db1 -> insert('comments',$data);
+            redirect(pingke_url().'/pingke_index/content/'.$course_tea_id.'/1');
+    }
+    
+    public function score($pig,$score){
+        $this -> load -> library('session');
+        $db1=$this -> load ->database('pingke',true);
+        $name = $this -> session -> userdata('username');
+        $query =$db1 -> get_where('anti_shua',array('user_name'=>$name,'course_tea_id'=>$pig),1,0);
+        if($query->num_rows()==0){
+            $db1 -> where("id",$pig);
+            $query = $db1 -> get('course_tea');
+            foreach(($query->result()) as $row){
+                $people_raw = $row -> people; 
+                $score_raw = $row -> score;
             }
-            redirect(pingke_url().'/pingke_index/content/'.$pig.'/1');
+            $score_new = $score_raw+$score;
+            $people_new = $people_raw +1;
+            $db1 -> where("id",$pig);
+            $db1 -> update("course_tea",array('people'=>$people_new,'score'=>$score_new));
+            $db1 -> insert('anti_shua',array('course_tea_id'=>$pig,'user_name'=>$name));
         }
+        redirect(pingke_url().'/pingke_index/content/'.$pig.'/1');
+    }
 
 }
