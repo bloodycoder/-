@@ -10,10 +10,27 @@
 <body>
 
 <script type="text/javascript">
-function star(){
+	function star(){
 
-window.open('<?=pingke_url()?>/pingke_index/star/','Window','width=600,height=400,top=100')    
-}
+	window.open('<?=pingke_url()?>/pingke_index/star/','Window','width=600,height=400,top=100')    
+	}
+
+	function reply (id1, id2){
+		var text = document.getElementById(id1)
+		if(text.style.display=="inline"){
+			text.style.display="none";
+		}else{
+			text.style.display="inline";
+		}			
+		
+		var subtn = document.getElementById(id2);
+		if(subtn.style.display=="inline"){
+			subtn.style.display="none";
+		}else{
+			subtn.style.display="inline";
+		}	
+	}
+
 </script>
 </head>
 
@@ -101,6 +118,19 @@ window.open('<?=pingke_url()?>/pingke_index/star/','Window','width=600,height=40
 	  <br>
 	  <legend></legend>
       <div class="row">
+
+<!--
+    <div class="col-md-12">
+        <h4>nickname</h4>
+        <pre style="font-size:18">there is content</pre>		
+		<a id='#12' href="javascript:void(0)" onclick="reply('#11','#13')" style="float:right;">reply</a><br />
+		<textarea id="#11" cols="120%" rows="5" name="reply"  style="margin-left:20%;" hidden>here is reply</textarea><br />        
+		<button id='#13' type="submit" class="btn btn-default" style="float:right;display:none;">submit</button>
+		<p style="clear:both;">&nbsp;<p>
+		<legend></legend>
+    </div>
+-->
+
       	<?php if($comment1):?>
         <div class="col-md-12">
           <h4><?php echo $nickname1;?></h4>
